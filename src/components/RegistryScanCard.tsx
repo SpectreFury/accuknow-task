@@ -5,7 +5,7 @@ import { Line } from 'react-chartjs-2';
 
 const RegistryScanCard = ({ isVisible, title, graphData }: { title: any, graphData: any, isVisible: true }) => {
     if (isVisible) {
-        return <Card sx={{ padding: 2, maxWidth: 550, width: 550 }}>
+        return <Card sx={{ padding: 2, maxWidth: 650, width: 650 }}>
             <Text fontSize={"lg"} fontWeight={500}>{title}</Text>
             <Line data={graphData}></Line>
         </Card>

@@ -5,7 +5,7 @@ import GraphImage from '../assets/graph-image.jpg'
 
 const CwppCard = ({ title, isVisible }: { title: any, isVisible: boolean }) => {
     if (isVisible) {
-        return <Card sx={{ padding: 2, width: 550, maxWidth: 550 }}>
+        return <Card sx={{ padding: 2, width: 650, maxWidth: 650 }}>
             <Text fontSize={"lg"} fontWeight={500}>{title}</Text>
             <Flex align="center" gap={2}>
                 <img src={GraphImage} />

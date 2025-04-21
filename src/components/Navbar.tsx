@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { Flex, Text, InputGroup, Input } from "@chakra-ui/react";
+import { Flex, Text, InputGroup, Input, Avatar, AvatarGroup } from "@chakra-ui/react";
 import { ArrowRight, LucideSearch } from 'lucide-react'
 
 const Navbar = ({ searchInput, setSearchInput }) => {
@@ -16,7 +16,13 @@ const Navbar = ({ searchInput, setSearchInput }) => {
                 <Input placeholder="Search anything" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
             </InputGroup>
 
-            <Text>User Name</Text>
+            <AvatarGroup>
+                <Avatar.Root>
+                    <Avatar.Fallback />
+                    <Avatar.Image src={"https://github.com/shadcn.png"} />
+                </Avatar.Root>
+
+            </AvatarGroup>
 
         </Flex>
     </Flex >

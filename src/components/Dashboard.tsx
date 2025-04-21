@@ -1,11 +1,12 @@
 //@ts-nocheck
 
 import { useState } from 'react'
-import { Flex, Text, Button, Drawer, Tabs, Checkbox } from "@chakra-ui/react";
-import { Plus } from 'lucide-react'
+import { Flex, Text, Button, Drawer, Tabs, Checkbox, IconButton, MenuItem, Select, Portal } from "@chakra-ui/react";
+import { Plus, RefreshCcw, Settings, EllipsisVertical } from 'lucide-react'
 import DashboardCard from "./DashboardCard";
 import CwppCard from "./CwppCard";
 import RegistryScanCard from "./RegistryScanCard";
+import { Autocomplete, TextField } from '@mui/material';
 
 const Dashboard = ({ searchInput }) => {
     const [open, setOpen] = useState(false);
@@ -56,8 +57,15 @@ const Dashboard = ({ searchInput }) => {
             isVisible: true,
             title: "Cloud Accounts",
             details: [
-                { name: "Connected", value: 2 },
-                { name: "Not Connected", value: 2 }
+                {
+                    name: "Connected", value: 2,
+                    color: 'rgb(50,255, 255)',
+                },
+                {
+                    name: "Not Connected", value: 2,
+                    color: 'rgb(54, 162, 235)',
+
+                }
             ],
             doughnutData: {
                 datasets: [{
@@ -74,10 +82,26 @@ const Dashboard = ({ searchInput }) => {
             isVisible: true,
             title: "Cloud Account Risk Assessment",
             details: [
-                { name: "Failed", value: 1689 },
-                { name: "Warning", value: 681 },
-                { name: "Not Available", value: 36 },
-                { name: "Passed", value: 7253 }
+                {
+                    name: "Failed", value: 1689, color:
+                        'rgb(255,100, 100)',
+
+                },
+                {
+                    name: "Warning", value: 681, color:
+                        'rgb(255,255, 100)',
+
+                },
+                {
+                    name: "Not Available", value: 36, color:
+                        'rgb(150, 150, 150)',
+
+                },
+                {
+                    name: "Passed", value: 7253, color:
+                        'rgb(150, 255, 100)',
+
+                }
             ],
             doughnutData: {
                 datasets: [{
@@ -120,72 +144,101 @@ const Dashboard = ({ searchInput }) => {
 
         <Flex width="full" direction={"row"} align={"center"} justify={"space-between"}>
             <Text fontSize={"lg"} fontWeight={700}>CNAPP Dashboard</Text>
-            <Drawer.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
-                <Drawer.Backdrop />
-                <Drawer.Trigger asChild >
-                    <Button variant="solid" >Add Widget <Plus /></Button>
-                </Drawer.Trigger>
-                <Drawer.Positioner>
-                    <Drawer.Content>
-                        <Drawer.Header>
-                            <Drawer.Title>Add Widget</Drawer.Title>
-                        </Drawer.Header>
-                        <Drawer.Body>
-                            <Text>Personalize your dashboard by adding the following</Text>
-                            <Tabs.Root defaultValue="cspm" variant="line" mt={5}>
-                                <Tabs.List bg="bg.muted" rounded="l3" p="1">
-                                    <Tabs.Trigger value="cspm">
-                                        CSPM
-                                    </Tabs.Trigger>
-                                    <Tabs.Trigger value="cwpp">
-                                        CWPP
-                                    </Tabs.Trigger>
-                                    <Tabs.Trigger value="image">
-                                        Image
-                                    </Tabs.Trigger>
-                                    <Tabs.Trigger value="ticket">
-                                        Ticket
-                                    </Tabs.Trigger>
-                                </Tabs.List>
-                                {cnappData.map((data) =>
-                                    <Tabs.Content value="cspm">
-                                        <Checkbox.Root checked={data.isVisible} onCheckedChange={(e) => handleCnappCheckChange(e, data)}>
+            <Flex gap={2} align={"center"}>
+                <Drawer.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
+                    <Drawer.Backdrop />
+                    <Drawer.Trigger asChild >
+                        <Button variant="solid" >Add Widget <Plus /></Button>
+                    </Drawer.Trigger>
+                    <Drawer.Positioner>
+                        <Drawer.Content>
+                            <Drawer.Header>
+                                <Drawer.Title>Add Widget</Drawer.Title>
+                            </Drawer.Header>
+                            <Drawer.Body>
+                                <Text>Personalize your dashboard by adding the following</Text>
+                                <Tabs.Root defaultValue="cspm" variant="line" mt={5}>
+                                    <Tabs.List bg="bg.muted" rounded="l3" p="1">
+                                        <Tabs.Trigger value="cspm">
+                                            CSPM
+                                        </Tabs.Trigger>
+                                        <Tabs.Trigger value="cwpp">
+                                            CWPP
+                                        </Tabs.Trigger>
+                                        <Tabs.Trigger value="image">
+                                            Image
+                                        </Tabs.Trigger>
+                                        <Tabs.Trigger value="ticket">
+                                            Ticket
+                                        </Tabs.Trigger>
+                                    </Tabs.List>
+                                    {cnappData.map((data) =>
+                                        <Tabs.Content value="cspm">
+                                            <Checkbox.Root checked={data.isVisible} onCheckedChange={(e) => handleCnappCheckChange(e, data)}>
+                                                <Checkbox.HiddenInput />
+                                                <Checkbox.Control />
+                                                <Checkbox.Label>{data.title}</Checkbox.Label>
+                                            </Checkbox.Root>
+                                        </Tabs.Content>
+                                    )}
+                                    {cwppData.map((data) =>
+                                        <Tabs.Content value="cwpp">
+                                            <Checkbox.Root checked={data.isVisible} onCheckedChange={(e) => handleCwppCheckChange(e, data)}>
+                                                <Checkbox.HiddenInput />
+                                                <Checkbox.Control />
+                                                <Checkbox.Label>{data.title}</Checkbox.Label>
+                                            </Checkbox.Root>
+                                        </Tabs.Content>
+                                    )}
+                                    {registryScanData.map((data) =>
+                                        <Tabs.Content value="image">
+                                            <Checkbox.Root checked={data.isVisible} onCheckedChange={(e) => handleRegistryChange(e, data)}>
+                                                <Checkbox.HiddenInput />
+                                                <Checkbox.Control />
+                                                <Checkbox.Label>{data.title}</Checkbox.Label>
+                                            </Checkbox.Root>
+                                        </Tabs.Content>
+                                    )}
+                                    <Tabs.Content value="ticket">
+                                        <Checkbox.Root>
                                             <Checkbox.HiddenInput />
                                             <Checkbox.Control />
-                                            <Checkbox.Label>{data.title}</Checkbox.Label>
+                                            <Checkbox.Label>Cloud Accounts</Checkbox.Label>
                                         </Checkbox.Root>
                                     </Tabs.Content>
-                                )}
-                                {cwppData.map((data) =>
-                                    <Tabs.Content value="cwpp">
-                                        <Checkbox.Root checked={data.isVisible} onCheckedChange={(e) => handleCwppCheckChange(e, data)}>
-                                            <Checkbox.HiddenInput />
-                                            <Checkbox.Control />
-                                            <Checkbox.Label>{data.title}</Checkbox.Label>
-                                        </Checkbox.Root>
-                                    </Tabs.Content>
-                                )}
-                                {registryScanData.map((data) =>
-                                    <Tabs.Content value="image">
-                                        <Checkbox.Root checked={data.isVisible} onCheckedChange={(e) => handleRegistryChange(e, data)}>
-                                            <Checkbox.HiddenInput />
-                                            <Checkbox.Control />
-                                            <Checkbox.Label>{data.title}</Checkbox.Label>
-                                        </Checkbox.Root>
-                                    </Tabs.Content>
-                                )}
-                                <Tabs.Content value="ticket">
-                                    <Checkbox.Root>
-                                        <Checkbox.HiddenInput />
-                                        <Checkbox.Control />
-                                        <Checkbox.Label>Cloud Accounts</Checkbox.Label>
-                                    </Checkbox.Root>
-                                </Tabs.Content>
-                            </Tabs.Root>
-                        </Drawer.Body>
-                    </Drawer.Content>
-                </Drawer.Positioner>
-            </Drawer.Root>
+                                </Tabs.Root>
+                            </Drawer.Body>
+                        </Drawer.Content>
+                    </Drawer.Positioner>
+                </Drawer.Root>
+                <IconButton aria-label={"Refresh"} >
+                    <RefreshCcw />
+                </IconButton>
+                <IconButton aria-label={"Settings"} >
+                    <EllipsisVertical />
+                </IconButton>
+                <Select.Root width={200}>
+                    <Select.HiddenSelect />
+                    <Select.Control>
+                        <Select.Trigger>
+                            <Select.ValueText placeholder="Last 2 days" />
+                        </Select.Trigger>
+                        <Select.IndicatorGroup>
+                            <Select.Indicator />
+                        </Select.IndicatorGroup>
+                    </Select.Control>
+                    <Portal>
+                        <Select.Positioner>
+                            <Select.Content>
+                                <Select.Item item={"Last 2 days"} >
+                                    <Text>Last 2 days</Text>
+                                </Select.Item>
+                            </Select.Content>
+                        </Select.Positioner>
+
+                    </Portal>
+                </Select.Root>
+            </Flex>
         </Flex>
 
         <Flex mt={10} gap={5}>
