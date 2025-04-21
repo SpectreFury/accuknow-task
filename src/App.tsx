@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { Container } from '@chakra-ui/react'
 import Navbar from './components/Navbar'
@@ -9,7 +9,7 @@ function App() {
 
   return (<Container maxW={1680}>
     <Navbar searchInput={searchInput} setSearchInput={setSearchInput} />
-    <Dashboard searchInput={searchInput}/>
+    <Dashboard searchInput={searchInput} />
   </Container>
   )
 }

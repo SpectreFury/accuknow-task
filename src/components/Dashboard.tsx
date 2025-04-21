@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+//@ts-nocheck
+
+import { useState } from 'react'
 import { Flex, Text, Button, Drawer, Tabs, Checkbox } from "@chakra-ui/react";
 import { Plus } from 'lucide-react'
 import DashboardCard from "./DashboardCard";

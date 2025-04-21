@@ -1,5 +1,5 @@
 import 'chart.js/auto'
-import { Flex, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import { Card } from "@mui/material";
 import { Line } from 'react-chartjs-2';
 

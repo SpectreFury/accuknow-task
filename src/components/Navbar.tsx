@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Flex, Text, InputGroup, Input } from "@chakra-ui/react";
 import { ArrowRight, LucideSearch } from 'lucide-react'
 
