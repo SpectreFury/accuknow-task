@@ -5,7 +5,7 @@ import DashboardCard from "./DashboardCard";
 import CwppCard from "./CwppCard";
 import RegistryScanCard from "./RegistryScanCard";
 
-const Dashboard = () => {
+const Dashboard = ({ searchInput }) => {
     const [open, setOpen] = useState(false);
 
     const [cwppData, setCwppData] = useState(
@@ -93,6 +93,11 @@ const Dashboard = () => {
         }
         ]
     )
+
+    const filteredCnapp = cnappData.filter((data) => data.title.toLowerCase().includes(searchInput.toLowerCase()))
+    const filteredCwpp = cwppData.filter((data) => data.title.toLowerCase().includes(searchInput.toLowerCase()))
+    const filteredRegistry = registryScanData.filter((data) => data.title.toLowerCase().includes(searchInput.toLowerCase()))
+
 
     function handleCnappCheckChange(e: any, data: any) {
         setCnappData((prev) =>
@@ -182,20 +187,20 @@ const Dashboard = () => {
         </Flex>
 
         <Flex mt={10} gap={5}>
-            {cnappData.map((data) =>
+            {filteredCnapp.map((data) =>
                 <DashboardCard isVisible={data.isVisible} title={data.title} details={data.details} doughnutData={data.doughnutData} />
             )}
         </Flex>
 
         <Text fontSize={"lg"} fontWeight={700} mt={5}>CWPP Dashboard</Text>
         <Flex mt={10} my={10} gap={5}>
-            {cwppData.map((data) =>
+            {filteredCwpp.map((data) =>
                 <CwppCard isVisible={data.isVisible} title={data.title} image={data.image} />
             )}
         </Flex>
         <Text fontSize={"lg"} fontWeight={700} mt={5}>Registry Scan</Text>
         <Flex mt={10} my={10} gap={5}>
-            {registryScanData.map((data) =>
+            {filteredRegistry.map((data) =>
                 <RegistryScanCard isVisible={data.isVisible} title={data.title} graphData={data.graphData} />
             )}
         </Flex>
