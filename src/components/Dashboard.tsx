@@ -2,6 +2,7 @@ import { Flex, Text, Button } from "@chakra-ui/react";
 import { Plus } from 'lucide-react'
 import DashboardCard from "./DashboardCard";
 import CwppCard from "./CwppCard";
+import RegistryScanCard from "./RegistryScanCard";
 
 const Dashboard = () => {
     const cwppData = [{
@@ -9,6 +10,33 @@ const Dashboard = () => {
         image: 'image url goes here now'
     },
     { title: "Workload Alerts", image: "image url goes here now" }]
+
+    const registryScanData = [{
+        title: 'Image Risk Assessment',
+        graphData: {
+            labels: ["Critical", "High", "Mild", "Okayish", "Working"],
+            datasets: [{
+                label: 'Risk levels',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+    }, {
+        title: 'Image Risk Assessment',
+        graphData: {
+            labels: ["Critical", "High", "Mild", "Okayish", "Working"],
+            datasets: [{
+                label: 'Risk levels',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+    }]
+
     const jsonData = [{
         title: "Cloud Accounts",
         details: [
@@ -67,6 +95,12 @@ const Dashboard = () => {
         <Flex mt={10} my={10} gap={5}>
             {cwppData.map((data) =>
                 <CwppCard title={data.title} image={data.image} />
+            )}
+        </Flex>
+        <Text fontSize={"lg"} fontWeight={700} mt={5}>Registry Scan</Text>
+        <Flex mt={10} my={10} gap={5}>
+            {registryScanData.map((data) =>
+                <RegistryScanCard title={data.title} graphData={data.graphData} />
             )}
         </Flex>
     </Flex>

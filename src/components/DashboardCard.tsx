@@ -4,7 +4,7 @@ import { Card } from "@mui/material";
 import { Doughnut } from "react-chartjs-2";
 
 const DashboardCard = ({ title, details, doughnutData }: { title: string, details: any, doughnutData: any }) => {
-    return <Card sx={{ padding: 2 }}>
+    return <Card sx={{ padding: 2,width: 550, maxWidth: 550 }}>
         <Text fontSize={"lg"} fontWeight={500}>{title}</Text>
         <Flex align="center" gap={2}>
             <Flex>
